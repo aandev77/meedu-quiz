@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #f9a8d4 #fff1f5;
+}
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fff1f5;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    #f9a8d4,
+    #ec4899
+  );
+  border-radius: 20px;
+  border: 2px solid #fff1f5;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    #ec4899,
+    #db2777
+  );
+}
+
+/* Scrollbar khusus area modal */
+.quiz-modal-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.quiz-modal-scroll::-webkit-scrollbar-track {
+  background: #fff1f5;
+  border-radius: 20px;
+}
+
+.quiz-modal-scroll::-webkit-scrollbar-thumb {
+  background: #f9a8d4;
+  border-radius: 20px;
+}
+
+.quiz-modal-scroll::-webkit-scrollbar-thumb:hover {
+  background: #ec4899;
+}

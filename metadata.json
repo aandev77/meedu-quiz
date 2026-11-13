@@ -1,0 +1,6 @@
+{
+  "name": "ZEP Quiz Metaverse - Game Edukasi Interaktif",
+  "description": "Game edukasi metaverse interaktif ala ZEP Quiz dengan avatar 2D pixel, arena kuis OX & 4-Pilihan, leaderboard real-time, dan dukungan multiplayer.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
