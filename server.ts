@@ -456,8 +456,10 @@ async function startServer() {
   }
 }
 
+// Jalankan server saat development / localhost
 if (process.env.NODE_ENV !== 'production') {
-  startServer();
+  startServer().catch(console.error);
 }
 
+// Ekspor Express agar bisa digunakan Vercel
 export default app;
