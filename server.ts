@@ -9,11 +9,6 @@ dotenv.config();
 const app = express();
 app.use(express.json({ limit: '25mb' }));
 
-const TEACHER_EMAILS = [
-  'farhanrajinsholat@gmail.com',
-  'halimkosong7@gmail.com',
-];
-
 const verifyFirebaseToken = async (
   req: express.Request,
   res: express.Response,
@@ -198,42 +193,6 @@ app.get(
     return res.json({
       success: true,
       message: 'Autentikasi Guru berhasil.',
-    });
-  }
-);
-
-// Mengecek identitas dan role pengguna
-app.get(
-  '/api/auth/profile',
-  verifyFirebaseToken,
-  (req, res) => {
-    const user = res.locals.user;
-
-    const isTeacher =
-      user.emailVerified &&
-      TEACHER_EMAILS.includes(user.email);
-
-    return res.json({
-      success: true,
-      user: {
-        uid: user.uid,
-        email: user.email,
-        emailVerified: user.emailVerified,
-        role: isTeacher ? 'teacher' : 'student',
-      },
-    });
-  }
-);
-
-// Endpoint khusus guru untuk menguji otorisasi
-app.get(
-  '/api/teacher/check',
-  verifyFirebaseToken,
-  verifyTeacher,
-  (req, res) => {
-    return res.json({
-      success: true,
-      message: 'Autentikasi guru berhasil.',
     });
   }
 );
@@ -479,21 +438,26 @@ KELUARAN:
 });
 
 async function startServer() {
-  const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+  const PORT = process.env.PORT
+    ? parseInt(process.env.PORT, 10)
+    : 3000;
 
-  if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('dist'));
-  } else {
+  if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
     });
-    app.use(vite.middlewares);
-  }
 
-  app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server running at http://0.0.0.0:${PORT}`);
-  });
+    app.use(vite.middlewares);
+
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`Server running at http://localhost:${PORT}`);
+    });
+  }
 }
 
-startServer();
+if (process.env.NODE_ENV !== 'production') {
+  startServer();
+}
+
+export default app;
