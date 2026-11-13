@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import { GoogleGenAI, Type } from '@google/genai';
 import dotenv from 'dotenv';
 import { adminAuth, adminDb } from './firebaseAdmin.js';
@@ -450,17 +451,19 @@ async function startServer() {
     });
 
     app.use(vite.middlewares);
-
-    app.listen(PORT, '0.0.0.0', () => {
-      console.log(`Server running at http://localhost:${PORT}`);
+  } else {
+    // Production: sajikan hasil build frontend dari folder public
+    const publicPath = path.join(process.cwd(), 'public');
+    app.use(express.static(publicPath));
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(publicPath, 'index.html'));
     });
   }
+
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running on port ${PORT}`);
+  });
 }
 
-// Jalankan server saat development / localhost
-if (process.env.NODE_ENV !== 'production') {
-  startServer().catch(console.error);
-}
-
-// Ekspor Express agar bisa digunakan Vercel
+startServer().catch(console.error);
 export default app;
