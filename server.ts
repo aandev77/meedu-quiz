@@ -2,7 +2,7 @@ import express from 'express';
 import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI, Type } from '@google/genai';
 import dotenv from 'dotenv';
-import { adminAuth, adminDb } from './firebaseAdmin';
+import { adminAuth, adminDb } from './firebaseAdmin.js';
 
 dotenv.config();
 
